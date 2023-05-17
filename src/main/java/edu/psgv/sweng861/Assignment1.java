@@ -50,8 +50,6 @@ public class Assignment1 {
 					numbers++;
 				} else if(isWord(section)) {
 					words++;
-				} else {
-					System.out.println("Not word or number:" + section);
 				}
 			}
 		}
@@ -80,7 +78,7 @@ public class Assignment1 {
 			for(int lineCharCounter = lineChars.length -1; lineCharCounter >= 0; lineCharCounter-- ) {
 				reversedLine[reverseLineCounter++] = lineChars[lineCharCounter];
 			}
-			reversedStrings.add(0, reversedLine.toString());
+			reversedStrings.add(0, String.valueOf(reversedLine));
 		}
 		String reversedString = "";
 		for(String string: reversedStrings) {
