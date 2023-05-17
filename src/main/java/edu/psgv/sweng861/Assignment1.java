@@ -7,28 +7,37 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
- * TODO Add in more comments and error handling
+ * This class reads a text file and prints out statistics on the file as well as the content of the file in reverse character order.
  * @author Zach Blouse
  *
  */
 public class Assignment1 {
 
 	/**
-	 * 
-	 * @param args
+	 * main requires a single command line argument, the path to the file to process
+	 * @param args[0] path of the file to read
 	 */
 	public static void main(String[] args) {
-		//input checking
-		if(args.length != 2) {
-			System.out.println("Error: Invalid Arguments. Program requires filename and number of characters to read.");
+		//gathering input and validating
+		if(args.length != 1) {
+			System.out.println("Error: Invalid Arguments. Program requires filename as argument.");
 			System.exit(1);
 		}
 		String fileName = args[0];
 		String fullFile = readTextFile(fileName);
-		int maxCharacters = Integer.parseInt(args[1]);
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please enter the maximum number of characters to read: ");
+		int maxCharacters = 0;
+		try {
+			maxCharacters = scanner.nextInt();
+		} catch (Exception e) {
+			System.out.println("Error: Invalid Entry.");
+			System.exit(1);
+		}
 		String[] lines = fullFile.split("\n");
 		//character count processing and maxCharacter validation
 		int characters = 0;
@@ -72,7 +81,7 @@ public class Assignment1 {
 					lower++;
 				}
 			}
-			//Reverse the string
+			//Reverse the line
 			char reversedLine[] = new char[lineChars.length];
 			int reverseLineCounter = 0;
 			for(int lineCharCounter = lineChars.length -1; lineCharCounter >= 0; lineCharCounter-- ) {
@@ -103,9 +112,7 @@ public class Assignment1 {
 	private static String readTextFile(String fileName) {
 		String file = "";
 		try {
-			// FileReader reads text files in the default encoding.
 			FileReader fileReader = new FileReader(fileName);
-			// Always wrap FileReader in BufferedReader.
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
@@ -124,7 +131,7 @@ public class Assignment1 {
 	
 	/**
 	 * Checks whether an input string is a word.
-	 * @param stringToCheck
+	 * @param stringToCheck String, the string to check
 	 * @return boolean whether input is a word.
 	 */
 	private static boolean isWord(String stringToCheck) {
@@ -135,7 +142,7 @@ public class Assignment1 {
 	
 	/**
 	 * Checks whether an input string is a number.
-	 * @param stringToCheck
+	 * @param stringToCheck String, the string to check
 	 * @return boolean whether input is a number.
 	 */
 	private static boolean isNumber(String stringToCheck) {
@@ -144,12 +151,12 @@ public class Assignment1 {
 	}
 	
 	/**
-	 * 
-	 * @param character
-	 * @return
+	 * Checks whether a char is a punctuation char
+	 * @param character char, the character to check
+	 * @return boolean, whether the character is a punctuation character
 	 */
 	private static boolean isPunctuation(char character) {
-		List<Character> punctuation = Arrays.asList('!','?','.',',','\'','\"',';',':','-');
+		List<Character> punctuation = Arrays.asList('!','?','.',',','\'','\"',';',':','-','(',')','{','}','<','>','[',']');
 		return punctuation.contains(character);
 	}
 }
